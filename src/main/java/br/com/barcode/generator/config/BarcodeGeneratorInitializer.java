@@ -1,14 +1,12 @@
-package br.com.barcode.generator.controller;
+package br.com.barcode.generator.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import br.com.barcode.generator.config.HelloWorldConfiguration;
-
-public class HelloWorldInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class BarcodeGeneratorInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[] { HelloWorldConfiguration.class };
+		return new Class[] { BarcodeGeneratorConfiguration.class };
 	}
 
 	@Override
