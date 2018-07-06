@@ -1,0 +1,7 @@
+# barcode-generator
+Rest service for barcode generation
+
+Barcode Example:
+
+  http://localhost:8080/barcode-generator/barcode/demi3334oo
+   iVBORw0KGgoAAAANSUhEUgAAAMAAAABpAQAAAABEtBGMAAAACXBIWXMAABcSAAAXEgFnn9JSAAAAEnRFWHRTb2Z0d2FyZQBCYXJjb2RlNEryjnYuAAAAzUlEQVR42mMocQ28KFIqGOt6VPAqCMYEdul16e1SYhiVGJUYlRiVGJUYlRiVGJWgs8R
