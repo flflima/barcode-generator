@@ -23,8 +23,8 @@ public class BarcodeGeneratorService implements Serializable {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BarcodeGeneratorService.class);
 
-	public String getBarcodeBase64(final String oficioControle) {
-		LOGGER.debug("Gerando código de barra para o Ofício " + oficioControle);
+	public String getBarcodeBase64(final String barcodeValue) {
+		LOGGER.info("BarcodeValue " + barcodeValue);
 
 		final Code39Bean bean = new Code39Bean();
 		final int dpi = 150;
@@ -44,7 +44,7 @@ public class BarcodeGeneratorService implements Serializable {
 					BufferedImage.TYPE_BYTE_BINARY, false, 0);
 
 			// Generate the barcode
-			bean.generateBarcode(canvas, oficioControle);
+			bean.generateBarcode(canvas, barcodeValue);
 
 			// Signal end of generation
 			canvas.finish();
@@ -53,7 +53,7 @@ public class BarcodeGeneratorService implements Serializable {
 
 			final String imgString = java.util.Base64.getEncoder().encodeToString(data);
 
-			LOGGER.debug(imgString);
+			LOGGER.info(imgString);
 
 			out.close();
 

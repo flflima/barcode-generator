@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.barcode.generator.service.BarcodeGeneratorService;
 
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
 @RequestMapping("barcode")
 public class BarcodeController implements Serializable {
@@ -25,9 +27,8 @@ public class BarcodeController implements Serializable {
 	private BarcodeGeneratorService barcodeGeneratorService;
 
 	@GetMapping(path = "{value}")
-	public ResponseEntity<?> getBarcode(@PathVariable final String value) throws Exception {
+	public ResponseEntity<?> getBarcode(@PathVariable final String value) {
 		final String barcode = this.barcodeGeneratorService.getBarcodeBase64(value);
 		return new ResponseEntity<>(barcode, HttpStatus.OK);
 	}
-
 }
