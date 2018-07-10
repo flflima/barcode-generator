@@ -29,32 +29,29 @@ public class BarcodeGeneratorService implements Serializable {
 		final Code39Bean bean = new Code39Bean();
 		final int dpi = 150;
 
-		// Configure the barcode generator
-		bean.setModuleWidth(UnitConv.in2mm(1.0f / dpi)); // makes the narrow bar
-		// width exactly one pixel
+		bean.setModuleWidth(UnitConv.in2mm(1.0f / dpi));
 		bean.setWideFactor(3);
 		bean.doQuietZone(false);
 
-		// Open output file
-		OutputStream out = new ByteArrayOutputStream();
+		// create output file
+		final OutputStream out = new ByteArrayOutputStream();
 
 		try {
 			// Set up the canvas provider for monochrome PNG output
 			final BitmapCanvasProvider canvas = new BitmapCanvasProvider(out, "image/x-png", dpi,
 					BufferedImage.TYPE_BYTE_BINARY, false, 0);
 
-			// Generate the barcode
 			bean.generateBarcode(canvas, barcodeValue);
-
-			// Signal end of generation
 			canvas.finish();
 
+			// generate output array data
 			byte[] data = ((ByteArrayOutputStream) out).toByteArray();
 
+			// convert to base 64 string
 			final String imgString = java.util.Base64.getEncoder().encodeToString(data);
-
 			LOGGER.info(imgString);
 
+			// close outputstream
 			out.close();
 
 			return imgString;
