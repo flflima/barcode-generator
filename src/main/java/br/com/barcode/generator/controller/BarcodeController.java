@@ -18,9 +18,6 @@ import br.com.barcode.generator.service.BarcodeGeneratorService;
 @RequestMapping("barcode")
 public class BarcodeController implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -8126043232634467033L;
 
 	@Autowired

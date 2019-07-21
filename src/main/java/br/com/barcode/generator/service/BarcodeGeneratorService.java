@@ -16,9 +16,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class BarcodeGeneratorService implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 291805557689468643L;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BarcodeGeneratorService.class);
