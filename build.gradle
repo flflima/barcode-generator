@@ -42,9 +42,9 @@ jacocoTestCoverageVerification {
 dependencies {
     implementation 'net.sf.barcode4j:barcode4j:2.1'
 
-    implementation 'org.springframework:spring-core:5.0.7'
-    implementation 'org.springframework:spring-webmvc:5.0.7'
-    implementation 'org.springframework:spring-web:5.0.7'
+    implementation 'org.springframework:spring-core:5.0.7.RELEASE'
+    implementation 'org.springframework:spring-webmvc:5.0.7.RELEASE'
+    implementation 'org.springframework:spring-web:5.0.7.RELEASE'
     implementation 'javax.servlet:javax.servlet-api:4.0.1'
     implementation 'org.slf4j:slf4j-log4j12:1.7.25'
     implementation 'org.apache.commons:commons-lang3:3.7'
@@ -57,9 +57,7 @@ dependencies {
 
     implementation 'org.jacoco:org.jacoco.core:0.8.4'
 
-    testImplementation 'org.springframework:spring-test:5.0.6.RELEASE'
-//    testImplementation 'junit:junit:4.12'
-
+    testImplementation 'org.springframework:spring-test:5.0.7.RELEASE'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
 
