@@ -9,7 +9,7 @@
 	<description>Serving a barcode generator</description>
 
 	<properties>
-		<spring.version>5.0.7.RELEASE</spring.version>
+		<spring.version>5.2.3.RELEASE</spring.version>
 		<javax.servlet.version>4.0.1</javax.servlet.version>
 		<barcode.version>2.1</barcode.version>
 		<slf4j.version>1.7.25</slf4j.version>
