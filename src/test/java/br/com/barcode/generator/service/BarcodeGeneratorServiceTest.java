@@ -2,22 +2,20 @@ package br.com.barcode.generator.service;
 
 import br.com.barcode.generator.dto.BarcodeDTO;
 import br.com.barcode.generator.service.impl.BarcodeGeneratorServiceImpl;
-import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import org.mockito.InjectMocks;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @SpringBootTest
 class BarcodeGeneratorServiceTest {
 
-    @Mock
+    @InjectMocks
     private BarcodeGeneratorServiceImpl barcodeGeneratorService;
 
     @Test
