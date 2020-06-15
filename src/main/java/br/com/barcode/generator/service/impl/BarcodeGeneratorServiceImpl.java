@@ -1,22 +1,22 @@
-package br.com.barcode.generator.util;
+package br.com.barcode.generator.service.impl;
 
+import br.com.barcode.generator.dto.BarcodeDTO;
+import br.com.barcode.generator.service.BarcodeGeneratorService;
 import org.krysalis.barcode4j.impl.code39.Code39Bean;
 import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
 import org.krysalis.barcode4j.tools.UnitConv;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class Code39BeanGenerator implements Generator {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(Code39BeanGenerator.class);
+@Service
+public class BarcodeGeneratorServiceImpl implements BarcodeGeneratorService {
 
     @Override
-    public String generateBarcodeString(final String input) throws IOException {
+    public BarcodeDTO getBarcodeBase64(final String value) throws IOException {
         final Code39Bean bean = new Code39Bean();
         final int dpi = 150;
 
@@ -32,7 +32,7 @@ public class Code39BeanGenerator implements Generator {
             final BitmapCanvasProvider canvas = new BitmapCanvasProvider(out, "image/x-png", dpi,
                     BufferedImage.TYPE_BYTE_BINARY, false, 0);
 
-            bean.generateBarcode(canvas, input);
+            bean.generateBarcode(canvas, value);
             canvas.finish();
 
             // generate output array data
@@ -40,22 +40,22 @@ public class Code39BeanGenerator implements Generator {
 
             // convert to base 64 string
             final String imgString = java.util.Base64.getEncoder().encodeToString(data);
-            LOGGER.info(imgString);
+//			LOGGER.info(imgString);
 
             // close outputstream
             out.close();
 
-            return imgString;
+            return new BarcodeDTO(value, imgString);
         } catch (final IOException e) {
             e.printStackTrace();
-            LOGGER.error("" + e);
+//			LOGGER.error("" + e);
             throw e;
         } finally {
             try {
                 out.close();
             } catch (final IOException e) {
                 e.printStackTrace();
-                LOGGER.error("" + e);
+//				LOGGER.error("" + e);
             }
         }
     }
