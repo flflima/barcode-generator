@@ -1,7 +1,10 @@
 package br.com.barcode.generator.service.impl;
 
+import static java.util.Base64.getEncoder;
+
 import br.com.barcode.generator.dto.BarcodeDTO;
 import br.com.barcode.generator.service.BarcodeGeneratorService;
+import lombok.extern.log4j.Log4j2;
 import org.krysalis.barcode4j.impl.code39.Code39Bean;
 import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
 import org.krysalis.barcode4j.tools.UnitConv;
@@ -10,53 +13,57 @@ import org.springframework.stereotype.Service;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 @Service
+@Log4j2
 public class BarcodeGeneratorServiceImpl implements BarcodeGeneratorService {
 
+    private static final String MIME_TYPE = "image/x-png";
+    private static final Integer DPI = 150;
+
     @Override
-    public BarcodeDTO getBarcodeBase64(final String value) throws IOException {
-        final Code39Bean bean = new Code39Bean();
-        final int dpi = 150;
-
-        bean.setModuleWidth(UnitConv.in2mm(1.0f / dpi));
-        bean.setWideFactor(3);
-        bean.doQuietZone(false);
-
+    public BarcodeDTO getBarcodeBase64(final String value) {
         // create output file
-        final OutputStream out = new ByteArrayOutputStream();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        log.info("Gerando código de barras");
 
         try {
             // Set up the canvas provider for monochrome PNG output
-            final BitmapCanvasProvider canvas = new BitmapCanvasProvider(out, "image/x-png", dpi,
-                    BufferedImage.TYPE_BYTE_BINARY, false, 0);
+            buildCanvas(value, out);
 
-            bean.generateBarcode(canvas, value);
-            canvas.finish();
-
-            // generate output array data
-            byte[] data = ((ByteArrayOutputStream) out).toByteArray();
-
-            // convert to base 64 string
-            final String imgString = java.util.Base64.getEncoder().encodeToString(data);
-//			LOGGER.info(imgString);
-
-            // close outputstream
-            out.close();
+            String imgString = getEncoder().encodeToString(out.toByteArray());
+            log.debug(imgString);
 
             return new BarcodeDTO(value, imgString);
         } catch (final IOException e) {
-            e.printStackTrace();
-//			LOGGER.error("" + e);
-            throw e;
+            log.error("Error: {}", e.getMessage());
         } finally {
             try {
                 out.close();
             } catch (final IOException e) {
-                e.printStackTrace();
-//				LOGGER.error("" + e);
+                log.error("Error: {}", e.getMessage());
             }
         }
+
+        return new BarcodeDTO();
+    }
+
+    private void buildCanvas(String value, ByteArrayOutputStream out) throws IOException {
+        Code39Bean bean = getCode39Bean();
+        BitmapCanvasProvider canvas = new BitmapCanvasProvider(out, MIME_TYPE, DPI,
+            BufferedImage.TYPE_BYTE_BINARY, false, 0);
+        bean.generateBarcode(canvas, value);
+        canvas.finish();
+    }
+
+    private Code39Bean getCode39Bean() {
+        Code39Bean bean = new Code39Bean();
+
+        bean.setModuleWidth(UnitConv.in2mm(1.0f / DPI));
+        bean.setWideFactor(3);
+        bean.doQuietZone(false);
+
+        return bean;
     }
 }
