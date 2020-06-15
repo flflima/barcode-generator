@@ -1,4 +1,4 @@
-# barcode-generator
+# Barcode Generator
 Serviço para gerar um código de barras
 
 ## Build 
