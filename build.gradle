@@ -4,12 +4,13 @@ plugins {
     id 'jacoco'
 }
 
+
 repositories {
-    mavenLocal()
+//    mavenLocal()
     jcenter()
-    maven {
-        url = 'http://repo.maven.apache.org/maven2'
-    }
+//    maven {
+//        url = 'http://repo.maven.apache.org/maven2'
+//    }
 }
 
 test {
